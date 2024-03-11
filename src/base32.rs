@@ -1,6 +1,20 @@
 const ALPHABET: &'static str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 const CHAR_SIZE: i8 = 5;
 
+pub fn validate_base32(raw_input: &str) -> Result<String, String> {
+    if !raw_input.is_ascii() {
+        return Err("Invalid base32 value: non ascii characters".to_string());
+    }
+
+    let uppercase = raw_input.to_uppercase();
+
+    if !uppercase.chars().all(|c| (c >= 'A' &&  c <= 'Z') || (c >= '2' && c <= '7')) {
+        return Err("Invalid base32 value: characters out of range".to_string());
+    }
+
+    Ok(uppercase)
+}
+
 pub fn base32decode(encoded: &str) -> Option<Vec<u8>> {
     // Make sure the data is ascii
     if !encoded.is_ascii() { return None; }
