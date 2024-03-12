@@ -133,7 +133,7 @@ pub fn main() -> ExitCode {
                     match base32decode(&token.token) {
                         Some(decoded) => {
                             loop {
-                                let (code, time_left) = get_current_token(&decoded);
+                                let (code, time_left) = get_current_token(&decoded, 30, 6);
 
                                 if *quiet {
                                     println!("{:06}\x1b[K", code);
